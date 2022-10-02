@@ -1,16 +1,17 @@
 require("dotenv").config();
 const MongoClient = require("mongodb").MongoClient;
-const uri = process.env.DB_URI;
+const uri =
+  "mongodb+srv://Shweta:ShwetaRaj@cluster0.m5vgc.mongodb.net/?retryWrites=true&w=majority";
 
 // connection
-async function mongoConnection() {
+async function mongoConnection(collectionName) {
   let mongoClient;
   try {
     mongoClient = new MongoClient(uri);
     console.log("Connecting to mongodb cluster");
     await mongoClient.connect();
-    const db = mongoClient.db("Expenses");
-    return db.collection("expenseDetail");
+    const db = mongoClient.db("Avaglobal");
+    return db.collection(collectionName);
   } catch (error) {
     console.error("Connection with mongodb failed", error);
     process.exit();
@@ -18,18 +19,13 @@ async function mongoConnection() {
 }
 
 // Add item
-async function addExpense(collection) {
-  const studentDocument = {
-    item: "John Smith",
-    cost: 21,
-  };
-
-  await collection.insertOne(studentDocument);
+async function addExpense(collection, reqBody) {
+  return await collection.insertOne(reqBody);
 }
 
 // Find by item
 async function findExpense(collection, name) {
-  await collection.find({ item: name }).toArray();
+  return await collection.find({}, {}).toArray();
 }
 
 // Update All

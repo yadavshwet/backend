@@ -2,8 +2,13 @@ const express = require("express");
 require("dotenv").config();
 const port = 6000;
 const app = express();
+const bodyParser = require("body-parser");
+app.use(express.json());
 
-app.use('/expense' , require("./controller"))
+app.use("/services", require("./controllers/services"));
+app.use("/contact", require("./controllers/contact"));
+app.use("/analysis", require("./controllers/analysis"));
+app.use("/testimonals", require("./controllers/testimonals"));
 
 app.listen(port, () => {
   console.log(`Listening on ${port} `);
