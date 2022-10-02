@@ -11,6 +11,6 @@ app.use("/contact", require("./controllers/contact"));
 app.use("/analysis", require("./controllers/analysis"));
 app.use("/testimonals", require("./controllers/testimonals"));
 
-app.listen(port, () => {
+app.listen(PORT, () => {
   console.log(`Listening on ${PORT} `);
 });
