@@ -29,7 +29,10 @@ app.get("/", (req, res) => {
 app.put("/", (req, res) => {
   const mongClient1 = mongodb.mongoConnection("services");
   mongClient1.then((client) => {
-    const cc = mongodb.updateExpense(client, "John", { item: "Tomato" });
+    const cc = mongodb.updateExpense(client, req.body.id, {
+      name: req.body.name,
+      count: req.body.count,
+    });
     cc.then((data) => {
       res.send(data);
     });
@@ -40,7 +43,7 @@ app.put("/", (req, res) => {
 app.delete("/", (req, res) => {
   const mongClient1 = mongodb.mongoConnection("services");
   mongClient1.then((client) => {
-    const cc = mongodb.deleteExpense(client, "Tomato");
+    const cc = mongodb.deleteExpense(client, req.body.id);
     cc.then((data) => {
       res.send(data);
     });

@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { ObjectID } = require("bson");
 const MongoClient = require("mongodb").MongoClient;
 const uri =
   "mongodb+srv://Shweta:ShwetaRaj@cluster0.m5vgc.mongodb.net/?retryWrites=true&w=majority";
@@ -29,13 +30,16 @@ async function findExpense(collection, name) {
 }
 
 // Update All
-async function updateExpense(collection, name, updatedFields) {
-  await collection.updateMany({ item: name }, { $set: updatedFields });
+async function updateExpense(collection, id, updatedFields) {
+  return await collection.updateOne(
+    { _id: ObjectID(id) },
+    { $set: updatedFields }
+  );
 }
 
 // Delete All
-async function deleteExpense(collection, name) {
-  await collection.deleteMany({ item: name }, { $mod: { item: name } });
+async function deleteExpense(collection, id) {
+  return await collection.deleteMany({ _id: ObjectID(id) });
 }
 
 module.exports = {
