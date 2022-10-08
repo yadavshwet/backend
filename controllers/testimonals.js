@@ -4,6 +4,7 @@ const mongodb = require("../mongo-connection");
 
 // Add Expense
 app.post("/", (req, res) => {
+  
   const mongClient = mongodb.mongoConnection(services);
   mongClient.then((client) => {
     const cc = mongodb.addExpense(client);
