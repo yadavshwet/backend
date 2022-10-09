@@ -16,7 +16,7 @@ app.post("/", (req, res) => {
 
 // Get All Expenses
 app.get("/", (req, res) => {
-  const mongClient1 = mongodb.mongoConnection(services);
+  const mongClient1 = mongodb.mongoConnection("contact");
   mongClient1.then((client) => {
     const cc = mongodb.findExpense(client, "John");
     cc.then((data) => {
@@ -25,11 +25,17 @@ app.get("/", (req, res) => {
   });
 });
 
-// update expense
+// update contact
+
 app.put("/", (req, res) => {
-  const mongClient1 = mongodb.mongoConnection(services);
+  const mongClient1 = mongodb.mongoConnection("contact");
   mongClient1.then((client) => {
-    const cc = mongodb.updateExpense(client, "John", { item: "Tomato" });
+    const cc = mongodb.updateExpense(client, req.body.id, {
+      address: req.body.address,
+      email: req.body.email,
+      phone: req.body.phone,
+      location: req.body.location,
+    });
     cc.then((data) => {
       res.send(data);
     });
@@ -40,7 +46,7 @@ app.put("/", (req, res) => {
 app.delete("/", (req, res) => {
   const mongClient1 = mongodb.mongoConnection(services);
   mongClient1.then((client) => {
-    const cc = mongodb.deleteExpense(client, "Tomato");
+    const cc = mongodb.deleteExpense(client, req.body.id);
     cc.then((data) => {
       res.send(data);
     });
